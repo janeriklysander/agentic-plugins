@@ -38,7 +38,7 @@ Host *
 
 ### WSL2
 
-<details>
+<details markdown="1">
 <summary>Expand WSL2 instructions</summary>
 
 The 1Password agent runs on Windows and communicates over a named pipe. You need `npiperelay` to bridge it to a Unix socket in WSL2.
@@ -172,7 +172,7 @@ The sandbox needs three things to work with the SSH agent. The examples below sh
 }
 ```
 
-<details>
+<details markdown="1">
 <summary><strong>WSL2</strong></summary>
 
 ```json
