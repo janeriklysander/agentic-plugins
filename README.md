@@ -1,30 +1,42 @@
-# Agentic Plugins
+# Jan-Erik Lysander's Claude Code Plugins
 
-Curated plugins for [Claude Code](https://claude.com/claude-code) — a documentation system, a DDD design facilitator, and a hook creation guide.
-
-## Plugins
-
-| Plugin | Description |
-| --- | --- |
-| **docs-system** | Documentation skill with Diataxis framework, 8 templates, linting, and a tech-writer-reviewer agent |
-| **ddd-design** | Structured Domain-Driven Design discovery sessions with strategic and tactical modeling |
-| **create-hook** | Step-by-step guide for creating Claude Code hooks with shell scripts |
+My personal collection of [Claude Code](https://claude.com/claude-code) plugins for documentation, domain-driven design, and hook authoring.
 
 ## Installation
 
-From inside a Claude Code session, first add the marketplace:
+From a Claude Code session, add the marketplace first:
 
-```
+```text
 /plugin marketplace add janeriklysander/jel-claude-plugins
 ```
 
-Then install a plugin:
+Then install any plugin below. If you prefer to browse interactively, run `/plugin`.
 
-```
+## Plugins
+
+### [docs-system](plugins/docs-system/README.md)
+
+Documentation skill with the Diátaxis framework, 8 templates, and a tech-writer-reviewer agent.
+
+```text
 /plugin install docs-system@jel-claude-plugins
 ```
 
-Replace `docs-system` with the plugin you want. Or run `/plugin` to browse and install interactively.
+### [ddd-design](plugins/ddd-design/README.md)
+
+Structured Domain-Driven Design discovery — interview-driven, one question at a time, produces a domain model document.
+
+```text
+/plugin install ddd-design@jel-claude-plugins
+```
+
+### [create-hook](plugins/create-hook/README.md)
+
+Step-by-step guide for writing Claude Code hooks as shell scripts and wiring them into settings.json.
+
+```text
+/plugin install create-hook@jel-claude-plugins
+```
 
 ## Reference guides
 
@@ -35,7 +47,7 @@ Standalone reference documentation for Claude Code users, hosted at [janeriklysa
 
 ## Optional dependencies
 
-The **docs-system** plugin includes a lint script that uses [Vale](https://vale.sh/) and [markdownlint](https://github.com/DavidAnson/markdownlint-cli2). These are optional — if not installed, the documentation skill and tech-writer-reviewer agent will skip linting and note it in their output.
+The **docs-system** plugin's lint script uses [Vale](https://vale.sh/) and [markdownlint](https://github.com/DavidAnson/markdownlint-cli2). Both are optional — if you don't have them installed, the skill and reviewer agent skip linting and note it in their output. See the [docs-system README](plugins/docs-system/README.md) for install instructions.
 
 ## Contributing
 
