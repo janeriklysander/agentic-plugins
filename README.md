@@ -15,23 +15,23 @@ Curated plugins for [Claude Code](https://claude.com/claude-code) — a document
 From inside a Claude Code session, first add the marketplace:
 
 ```
-/plugin marketplace add janeriklysander/agentic-plugins
+/plugin marketplace add janeriklysander/jel-claude-plugins
 ```
 
 Then install a plugin:
 
 ```
-/plugin install docs-system@agentic-plugins
+/plugin install docs-system@jel-claude-plugins
 ```
 
 Replace `docs-system` with the plugin you want. Or run `/plugin` to browse and install interactively.
 
 ## Reference guides
 
-Standalone reference documentation for Claude Code users, hosted at [janeriklysander.github.io/agentic-plugins](https://janeriklysander.github.io/agentic-plugins/):
+Standalone reference documentation for Claude Code users, hosted at [janeriklysander.github.io/jel-claude-plugins](https://janeriklysander.github.io/jel-claude-plugins/):
 
-- [1Password SSH agent setup](https://janeriklysander.github.io/agentic-plugins/1password-ssh-agent-setup) — configure 1Password's SSH agent to work inside Claude Code's sandbox (macOS and WSL2)
-- [Claude Code security hardening](https://janeriklysander.github.io/agentic-plugins/claude-code-security-hardening) — three-layer permission and sandbox configuration to reduce prompt fatigue and protect against prompt injection
+- [1Password SSH agent setup](https://janeriklysander.github.io/jel-claude-plugins/1password-ssh-agent-setup) — configure 1Password's SSH agent to work inside Claude Code's sandbox (macOS and WSL2)
+- [Claude Code security hardening](https://janeriklysander.github.io/jel-claude-plugins/claude-code-security-hardening) — three-layer permission and sandbox configuration to reduce prompt fatigue and protect against prompt injection
 
 ## Optional dependencies
 
@@ -39,7 +39,7 @@ The **docs-system** plugin includes a lint script that uses [Vale](https://vale.
 
 ## Contributing
 
-Feedback and bug reports are welcome via [GitHub Issues](https://github.com/janeriklysander/agentic-plugins/issues). There is no roadmap — this is a personal collection shared with the community.
+Feedback and bug reports are welcome via [GitHub Issues](https://github.com/janeriklysander/jel-claude-plugins/issues). There is no roadmap — this is a personal collection shared with the community.
 
 ## License
 
