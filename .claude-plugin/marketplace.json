@@ -4,7 +4,7 @@
     "name": "Jan-Erik Lysander"
   },
   "metadata": {
-    "description": "Curated Claude Code plugins for documentation, domain design, and hook automation"
+    "description": "Curated Claude Code plugins for documentation, domain design, hook automation, and code review"
   },
   "plugins": [
     {
@@ -21,6 +21,11 @@
       "name": "create-hook",
       "source": "./plugins/create-hook",
       "description": "Guide for creating Claude Code hooks with shell scripts"
+    },
+    {
+      "name": "code-review",
+      "source": "./plugins/code-review",
+      "description": "Multi-agent code review with specialist agents for correctness, security, architecture, performance, maintainability, and observability"
     }
   ]
 }

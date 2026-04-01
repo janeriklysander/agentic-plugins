@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repo is
 
-A Claude Code plugin marketplace (`jel-claude-plugins`) containing three plugins: **docs-system**, **ddd-design**, and **create-hook**. There is no build system, no test suite, and no package manager — the repo is pure markdown and one shell script.
+A Claude Code plugin marketplace (`jel-claude-plugins`) containing four plugins: **docs-system**, **ddd-design**, **create-hook**, and **code-review**. There is no build system, no test suite, and no package manager — the repo is pure markdown and one shell script.
 
 ## Linting (the only executable)
 
