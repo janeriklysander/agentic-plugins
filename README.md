@@ -1,6 +1,6 @@
 # Jan-Erik Lysander's Claude Code Plugins
 
-My personal collection of [Claude Code](https://claude.com/claude-code) plugins for documentation, domain-driven design, and hook authoring.
+My personal collection of [Claude Code](https://claude.com/claude-code) plugins for documentation, domain-driven design, hook authoring, and code review.
 
 ## Installation
 
@@ -36,6 +36,14 @@ Step-by-step guide for writing Claude Code hooks as shell scripts and wiring the
 
 ```text
 /plugin install create-hook@jel-claude-plugins
+```
+
+### [code-review](plugins/code-review/README.md)
+
+Multi-agent code review — dispatches specialist agents (correctness, security, architecture, performance, maintainability, observability), normalizes findings by severity, and creates follow-up issues for descoped items.
+
+```text
+/plugin install code-review@jel-claude-plugins
 ```
 
 ## Reference guides
