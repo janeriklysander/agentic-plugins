@@ -57,6 +57,16 @@ Standalone reference documentation for Claude Code users, hosted at [janeriklysa
 
 The **docs-system** plugin's lint script uses [Vale](https://vale.sh/) and [markdownlint](https://github.com/DavidAnson/markdownlint-cli2). Both are optional — if you don't have them installed, the skill and reviewer agent skip linting and note it in their output. See the [docs-system README](plugins/docs-system/README.md) for install instructions.
 
+## Development setup
+
+After cloning, configure git to use the tracked hooks:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+A pre-commit hook enforces that any change to a plugin includes a version bump in that plugin's `plugin.json`.
+
 ## Contributing
 
 Feedback and bug reports are welcome via [GitHub Issues](https://github.com/janeriklysander/jel-claude-plugins/issues). There is no roadmap — this is a personal collection shared with the community.

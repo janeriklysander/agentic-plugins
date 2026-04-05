@@ -2,7 +2,7 @@
 name: code-review
 description: Code review a pull request
 argument-hint: "[PR URL, PR number, branch name, or leave empty for auto-detect]"
-allowed-tools: "Agent, Bash"
+allowed-tools: "Agent, Bash(gh *), Bash(git *), Read, Glob, Grep"
 ---
 
 # Code Review
@@ -36,7 +36,9 @@ Based on the diff, decide which of the 6 specialist agents to dispatch. Use this
 | **architecture** | When there are structural changes, new modules, new public APIs | Single-file bug fix, cosmetic changes, config-only |
 | **performance** | When there are algorithm changes, data access patterns, resource management | Docs-only, trivial changes, config-only |
 | **maintainability** | Yes (unless pure docs/config) | Docs-only, config-only |
-| **observability** | When there are production code changes with operational significance | No production code changes, pure tests, docs-only |
+| **observability** | When the observability contract changes (see below) | No production code changes, pure tests, docs-only |
+
+**Observability triage guidance:** dispatch observability when the change affects how operators observe the system — not just "does it touch log lines." Dispatch when you see: new background/async work, changes to error propagation paths, new failure modes, state machines, or any shift from request-scoped to process-scoped behavior. The question is not "are there log lines" but "can an operator still understand what's happening at 3am with the current instrumentation."
 
 Present triage as a table to the user and ask for confirmation before proceeding:
 
@@ -93,42 +95,14 @@ After all agents complete:
 
 ## Phase 5: Present results
 
-Output the review in this format:
+Output the review in two parts: **numbered details** first (scroll-up reading), then a **summary table at the bottom** so it sits right above the user's input box for easy reference.
 
 ```markdown
-## Code Review Summary
+## Code Review Details
 
-**Files reviewed:** N | **Agents dispatched:** [list]
-**Findings:** N Blockers, N Suggestions, N Nitpicks
+#### 1. SQL injection in login query
 
----
-
-### Blockers (must fix before merge)
-
-[findings or "None"]
-
-### Suggestions (should fix)
-
-[findings or "None"]
-
-### Nitpicks (take or leave)
-
-[findings or "None"]
-
----
-
-### Overall Assessment
-
-[1-3 sentence summary: is this safe to merge? what are the key concerns?]
-```
-
-Each finding in the output uses this format:
-
-```markdown
-### [SEVERITY] Short description
-
-**File:** `path/to/file.ext:LINE`
-**Dimension:** dimension-name
+**Severity:** BLOCKER | **File:** `auth.ts:42` | **Dimension:** security
 
 **What:** One-sentence description of the issue.
 
@@ -136,13 +110,42 @@ Each finding in the output uses this format:
 
 **Suggestion:**
 [concrete fix — code snippet, pseudocode, or actionable prose]
+
+#### 2. N+1 query in user list
+...
+
+---
+
+## Code Review Summary
+
+**Files reviewed:** N | **Agents dispatched:** [list]
+**Findings:** N Blockers, N Suggestions, N Nitpicks
+
+### Overall Assessment
+
+[1-3 sentence summary: is this safe to merge? what are the key concerns?]
+
+| # | Sev | File | Finding | Rec |
+|---|-----|------|---------|-----|
+| SEC-1 | BLK | `auth.ts:42` | SQL injection in login query | Fix now |
+| PRF-2 | SUG | `user.ts:88` | N+1 query in user list | Follow-up |
+| MNT-3 | NIT | `utils.ts:12` | Slightly better name for helper | Disregard |
+
+`COR` correctness · `SEC` security · `ARC` architecture · `PRF` performance · `MNT` maintainability · `OBS` observability
 ```
+
+### Format rules
+
+- **Details first:** numbered findings with full What/Why/Suggestion. The user scrolls up to read them.
+- **Summary table last:** sits at the bottom of the output, right above the input box. One row per finding. Severity abbreviations: `BLK`, `SUG`, `NIT`. Sort by severity (blockers first), then by file.
+- **Finding IDs** use the format `DIM-N` where `DIM` is the dimension abbreviation and `N` is a unique number. The number alone is sufficient for referencing ("descope 2"), but the prefix gives at-a-glance dimension context. Numbers must be unique across all dimensions. A dimension legend is printed below the table.
+- **Nitpick details are optional.** If there are many nitpicks, you may list them only in the summary table and omit their detail sections to keep output focused.
 
 ## Phase 6: Follow-up issues
 
 After presenting the review:
 
-1. Ask the user which items they want to address now vs. descope
+1. Ask the user which items (by number from the summary table) they want to address now vs. descope
 2. Validate descoping decisions against the rules in [review-principles.md](guides/review-principles.md):
    - Blockers cannot be descoped
    - Issues introduced by this PR cannot be descoped

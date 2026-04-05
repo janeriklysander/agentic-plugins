@@ -49,6 +49,10 @@ The most complex plugin — has sub-structure worth knowing:
 
 Served from `docs/` via Jekyll with `jekyll-theme-primer`. Custom `<head>` content for Mermaid rendering lives in `docs/_includes/head-custom.html`.
 
+## Plugin versioning
+
+Bump `version` in a plugin's `plugin.json` whenever that plugin changes. A pre-commit hook (`.githooks/pre-commit`) enforces this. Use semver: patch for fixes, minor for features, major for breaking changes.
+
 ## Git workflow
 
 - Squash merge only (merge commits and rebase disabled on GitHub)

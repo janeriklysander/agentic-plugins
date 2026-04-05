@@ -1,6 +1,6 @@
 {
   "name": "code-review",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Multi-agent code review with specialist agents for correctness, security, architecture, performance, maintainability, and observability",
   "author": { "name": "Jan-Erik Lysander" },
   "repository": "https://github.com/janeriklysander/jel-claude-plugins",
