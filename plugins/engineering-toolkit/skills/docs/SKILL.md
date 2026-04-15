@@ -1,8 +1,8 @@
 ---
-name: documentation
+name: docs
 description: Create and improve technical documentation. Use when the user wants to write docs, create a README, write an ADR, document an API, create a quickstart guide, write a runbook, create a migration guide, write an RFC or design doc, improve existing documentation, or mentions "docs" or "documentation".
 argument-hint: "[doc-type or topic]"
-allowed-tools: "Bash(bash ${CLAUDE_PLUGIN_ROOT}/skills/documentation/scripts/lint-docs.sh *)"
+allowed-tools: "Read, Glob, Grep, Bash(bash ${CLAUDE_PLUGIN_ROOT}/skills/docs/scripts/lint-docs.sh *)"
 ---
 
 # Documentation
@@ -85,7 +85,7 @@ Apply guidance from the relevant doc type guide and cross-cutting concerns:
 Before presenting the document to the user, run the bundled lint script:
 
 ```bash
-bash ${CLAUDE_PLUGIN_ROOT}/skills/documentation/scripts/lint-docs.sh <file-or-directory>
+bash ${CLAUDE_PLUGIN_ROOT}/skills/docs/scripts/lint-docs.sh <file-or-directory>
 ```
 
 This runs **markdownlint** and **Vale** (if installed). See [linting.md](guides/linting.md) for configuration details.

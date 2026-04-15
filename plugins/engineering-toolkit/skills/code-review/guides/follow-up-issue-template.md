@@ -18,7 +18,7 @@ Found during code review of PR #NUMBER (or branch `BRANCH_NAME`).
 ## Finding
 
 **Severity:** SUGGESTION | NITPICK
-**Dimension:** correctness | security | architecture | performance | maintainability | observability
+**Dimension:** correctness | security | architecture | performance | maintainability | observability | documentation
 **File(s):** `path/to/file.ext:LINE`
 
 DESCRIPTION — what the issue is and why it matters.

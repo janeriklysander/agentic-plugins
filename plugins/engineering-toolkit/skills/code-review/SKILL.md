@@ -2,7 +2,7 @@
 name: code-review
 description: Code review a pull request
 argument-hint: "[PR URL, PR number, branch name, or leave empty for auto-detect]"
-allowed-tools: "Agent, Bash(gh *), Bash(git *), Read, Glob, Grep"
+allowed-tools: "Agent, Bash(gh *), Bash(git *), Bash(bash ${CLAUDE_PLUGIN_ROOT}/skills/docs/scripts/lint-docs.sh *), Read, Glob, Grep"
 ---
 
 # Code Review
@@ -27,7 +27,7 @@ After obtaining the diff:
 
 ## Phase 2: Triage
 
-Based on the diff, decide which of the 6 specialist agents to dispatch. Use this decision matrix:
+Based on the diff, decide which of the 7 specialist agents to dispatch. Use this decision matrix:
 
 | Agent | Always | Skip when |
 |-------|--------|-----------|
@@ -37,8 +37,11 @@ Based on the diff, decide which of the 6 specialist agents to dispatch. Use this
 | **performance** | When there are algorithm changes, data access patterns, resource management | Docs-only, trivial changes, config-only |
 | **maintainability** | Yes (unless pure docs/config) | Docs-only, config-only |
 | **observability** | When the observability contract changes (see below) | No production code changes, pure tests, docs-only |
+| **documentation** | Yes (unless config-only) | Config-only changes with no doc-referenced surface |
 
 **Observability triage guidance:** dispatch observability when the change affects how operators observe the system — not just "does it touch log lines." Dispatch when you see: new background/async work, changes to error propagation paths, new failure modes, state machines, or any shift from request-scoped to process-scoped behavior. The question is not "are there log lines" but "can an operator still understand what's happening at 3am with the current instrumentation."
+
+**Documentation triage guidance:** dispatch documentation when the change touches code that is referenced in existing docs, adds new user-facing capabilities, or modifies `.md` files. The question is not "are there docs in the repo" but "could a user or contributor be misled by stale or missing documentation after this change."
 
 Present triage as a table to the user and ask for confirmation before proceeding:
 
@@ -53,6 +56,7 @@ Based on the diff, I recommend dispatching these agents:
 | performance | Yes | New database query in request path |
 | maintainability | Yes | Non-trivial code changes |
 | observability | Yes | Production request handler |
+| documentation | Yes | Changes public API referenced in README |
 
 Should I proceed with this selection? (yes / no — if no, tell me what to change)
 ```
@@ -84,12 +88,13 @@ Dispatch agents in parallel where possible. Use the agent names defined in this 
 - `performance` (model: sonnet)
 - `maintainability` (model: sonnet)
 - `observability` (model: sonnet)
+- `documentation` (model: opus)
 
 ## Phase 4: Normalize findings
 
 After all agents complete:
 
-1. **Deduplicate** — if two agents report the same issue, keep the finding from the agent whose dimension is the best fit. For example, if both correctness and security flag an unvalidated input, keep the security finding.
+1. **Deduplicate** — if two agents report the same issue, keep the finding from the agent whose dimension is the best fit. For example, if both correctness and security flag an unvalidated input, keep the security finding. If both maintainability and documentation flag that a function's JSDoc is wrong, keep the documentation finding.
 2. **Validate severity** — check each finding's severity against the rubric. If an agent assigned BLOCKER to something that's clearly a SUGGESTION by the rubric's litmus tests, adjust it.
 3. **Group** — organize findings by severity (Blockers first), then by file within each severity group.
 
@@ -131,7 +136,7 @@ Output the review in two parts: **numbered details** first (scroll-up reading), 
 | PRF-2 | SUG | `user.ts:88` | N+1 query in user list | Follow-up |
 | MNT-3 | NIT | `utils.ts:12` | Slightly better name for helper | Disregard |
 
-`COR` correctness · `SEC` security · `ARC` architecture · `PRF` performance · `MNT` maintainability · `OBS` observability
+`COR` correctness · `SEC` security · `ARC` architecture · `PRF` performance · `MNT` maintainability · `OBS` observability · `DOC` documentation
 ```
 
 ### Format rules
@@ -156,7 +161,7 @@ After presenting the review:
    - If not found → default to GitHub Issues, and suggest adding an issue tracker instruction to the project-level `CLAUDE.md`
 4. Create follow-up issues using the template in [follow-up-issue-template.md](guides/follow-up-issue-template.md):
    - Title: `[code-review] SHORT_DESCRIPTION`
-   - Labels: `code-review-follow-up` + dimension label (e.g., `security`, `performance`)
+   - Labels: `code-review-follow-up` + dimension label (e.g., `security`, `performance`, `documentation`)
    - No auto-assignment
 5. If the tracker CLI is unavailable → output copyable issue content as a fallback
 

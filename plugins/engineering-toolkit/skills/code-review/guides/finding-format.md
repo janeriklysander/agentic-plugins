@@ -8,7 +8,7 @@ Every agent must output findings using this exact structure. Consistent formatti
 ### [SEVERITY] Short description
 
 **File:** `path/to/file.ext:LINE`
-**Dimension:** correctness | security | architecture | performance | maintainability | observability
+**Dimension:** correctness | security | architecture | performance | maintainability | observability | documentation
 
 **What:** One-sentence description of the issue.
 

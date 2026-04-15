@@ -41,6 +41,11 @@ else
 fi
 
 if command -v vale &>/dev/null; then
+  # Auto-download style packages if missing
+  if [[ ! -d "${SCRIPT_DIR}/.vale/styles/Google" ]]; then
+    echo "==> Vale styles not found — running vale sync..."
+    vale --config "${SCRIPT_DIR}/.vale.ini" sync
+  fi
   echo "==> Running Vale..."
   if vale --config "${SCRIPT_DIR}/.vale.ini" "${TARGET}"; then
     echo "    Vale: passed"
